@@ -3,46 +3,97 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#070707" />
     <title>PulseRoom Command Center</title>
     <meta name="description" content="A visually rich Fastify + TypeScript + JavaScript portfolio demo." />
     <link rel="stylesheet" href="/styles.css" />
   </head>
   <body>
-    <div class="aurora aurora-one"></div>
-    <div class="aurora aurora-two"></div>
-    <main class="shell">
-      <section class="hero glass">
+    <a class="skip-link" href="#main-content">Skip to main content</a>
+    <div class="aurora aurora-one" aria-hidden="true"></div>
+    <div class="aurora aurora-two" aria-hidden="true"></div>
+
+    <main class="shell" id="main-content">
+      <header class="masthead">
         <div>
-          <p class="eyebrow">FASTIFY + TYPESCRIPT + JAVASCRIPT</p>
+          <p class="wordmark">PulseRoom</p>
+          <p class="masthead-copy">A live command surface for portfolio storytelling, operational demos, and realtime product polish.</p>
+        </div>
+        <div class="masthead-meta">
+          <span class="live-badge"><span class="live-dot" aria-hidden="true"></span>Live Demo</span>
+          <span class="masthead-note">Fastify, TypeScript &amp; JavaScript</span>
+        </div>
+      </header>
+
+      <section class="hero">
+        <div class="hero-copy-block">
+          <p class="eyebrow">Realtime Portfolio Surface</p>
           <h1>PulseRoom Command Center</h1>
           <p class="hero-copy">
-            A flashy realtime operations cockpit that feels more like a product launch control room than a CRUD app.
-            Built to showcase Fastify APIs, TypeScript backend structure, and a polished JavaScript frontend.
+            An editorial-feeling operations room that proves the backend is real, the stream is live, and the frontend has taste.
+            It turns a straightforward Fastify demo into something that feels reviewed, deliberate, and presentation-ready.
           </p>
+          <ul class="hero-points" aria-label="Key demo strengths">
+            <li>Typed routes and command validation</li>
+            <li>Server-Sent Events with live telemetry refresh</li>
+            <li>Canvas charting and operator-side actions</li>
+          </ul>
           <div class="hero-actions">
-            <button class="primary-btn" id="run-command-btn">Run Stabilize Command</button>
-            <button class="secondary-btn" id="refresh-btn">Refresh Snapshot</button>
+            <button class="primary-btn" id="run-command-btn" type="button">Run Stabilize Command</button>
+            <button class="secondary-btn" id="refresh-btn" type="button">Refresh Snapshot</button>
+            <button class="secondary-btn" id="reset-view-btn" type="button">Reset View</button>
           </div>
+          <p class="shortcut-note">Shortcuts: <kbd>R</kbd> refresh, <kbd>/</kbd> focus command, <kbd>P</kbd> cycle panels, <kbd>A</kbd> cycle alerts, <kbd>[</kbd>/<kbd>]</kbd> chart range.</p>
         </div>
-        <div class="hero-panel">
-          <div class="mini-orb"></div>
-          <div>
-            <h2>Live stream active</h2>
-            <p>Server-Sent Events are powering animated dashboard updates every few seconds.</p>
+
+        <aside class="hero-brief glass">
+          <div class="section-head brief-head">
+            <div>
+              <p class="section-label">Live Brief</p>
+              <h2>What this screen communicates immediately</h2>
+            </div>
           </div>
-        </div>
+
+          <div class="brief-list">
+            <article class="brief-item">
+              <p class="brief-kicker">Stream</p>
+              <h3>Updates arrive continuously without a front-end framework.</h3>
+              <p>The experience feels active, which makes the backend capability visible in seconds.</p>
+            </article>
+            <article class="brief-item">
+              <p class="brief-kicker">Story</p>
+              <h3>The layout explains the product before anyone reads the code.</h3>
+              <p>Metrics, momentum, and the audit trail each have one clear job in the composition.</p>
+            </article>
+          </div>
+
+          <div class="hero-status">
+            <span id="stream-status" class="status-chip is-live">Stream Healthy</span>
+            <p id="last-updated" class="last-updated">Waiting for first snapshot…</p>
+          </div>
+        </aside>
       </section>
 
-      <section class="metrics-grid" id="metrics-grid"></section>
+      <section class="metrics-grid" id="metrics-grid" aria-label="Selected KPIs"></section>
 
       <section class="content-grid">
         <section class="glass panel-block">
           <div class="section-head">
             <div>
-              <p class="section-label">Mission panels</p>
-              <h3>Operational surfaces</h3>
+              <p class="section-label">Mission Panels</p>
+              <h2>Operational Surfaces</h2>
+              <p class="section-copy">Panels should scan quickly, clarify health, and keep intervention obvious.</p>
             </div>
             <div class="badge">Realtime</div>
+          </div>
+          <div class="section-toolbar">
+            <div class="filter-group" id="panel-filter-group" role="group" aria-label="Filter mission panels">
+              <button class="filter-chip" type="button" data-filter-group="panel" data-filter-value="all" aria-pressed="true">All</button>
+              <button class="filter-chip" type="button" data-filter-group="panel" data-filter-value="healthy" aria-pressed="false">Healthy</button>
+              <button class="filter-chip" type="button" data-filter-group="panel" data-filter-value="watching" aria-pressed="false">Watching</button>
+              <button class="filter-chip" type="button" data-filter-group="panel" data-filter-value="critical" aria-pressed="false">Critical</button>
+            </div>
+            <p class="results-meta" id="panels-meta">Showing all surfaces</p>
           </div>
           <div id="panels-list" class="panel-list"></div>
         </section>
@@ -50,9 +101,18 @@
         <section class="glass panel-block chart-block">
           <div class="section-head">
             <div>
-              <p class="section-label">Signal line</p>
-              <h3>Live momentum</h3>
+              <p class="section-label">Signal Line</p>
+              <h2>Live Momentum</h2>
+              <p class="section-copy">A compact visual trend helps the stream feel trustworthy instead of decorative.</p>
             </div>
+          </div>
+          <div class="section-toolbar">
+            <div class="filter-group" id="range-filter-group" role="group" aria-label="Adjust chart range">
+              <button class="filter-chip" type="button" data-filter-group="range" data-filter-value="6" aria-pressed="false">6 Updates</button>
+              <button class="filter-chip" type="button" data-filter-group="range" data-filter-value="12" aria-pressed="true">12 Updates</button>
+              <button class="filter-chip" type="button" data-filter-group="range" data-filter-value="24" aria-pressed="false">24 Updates</button>
+            </div>
+            <p class="results-meta" id="chart-range-label">Showing the latest 12 updates</p>
           </div>
           <canvas id="sparkline" width="520" height="220" aria-label="Live momentum chart"></canvas>
         </section>
@@ -62,9 +122,19 @@
         <section class="glass panel-block">
           <div class="section-head">
             <div>
-              <p class="section-label">Activity feed</p>
-              <h3>Audit timeline</h3>
+              <p class="section-label">Activity Feed</p>
+              <h2>Audit Timeline</h2>
+              <p class="section-copy">Recent events should feel chronological, actionable, and easy to triage.</p>
             </div>
+          </div>
+          <div class="section-toolbar">
+            <div class="filter-group" id="activity-filter-group" role="group" aria-label="Filter activity timeline">
+              <button class="filter-chip" type="button" data-filter-group="activity" data-filter-value="all" aria-pressed="true">All</button>
+              <button class="filter-chip" type="button" data-filter-group="activity" data-filter-value="low" aria-pressed="false">Low</button>
+              <button class="filter-chip" type="button" data-filter-group="activity" data-filter-value="medium" aria-pressed="false">Medium</button>
+              <button class="filter-chip" type="button" data-filter-group="activity" data-filter-value="high" aria-pressed="false">High</button>
+            </div>
+            <p class="results-meta" id="activity-meta">Showing all activity</p>
           </div>
           <div id="activity-list" class="activity-list"></div>
         </section>
@@ -72,22 +142,40 @@
         <section class="glass panel-block">
           <div class="section-head">
             <div>
-              <p class="section-label">Why this demo works</p>
-              <h3>Portfolio talking points</h3>
+              <p class="section-label">Implementation Notes</p>
+              <h2>Portfolio Talking Points</h2>
+              <p class="section-copy">This column translates the visual demo into the engineering story behind it.</p>
             </div>
           </div>
           <div id="insights-list" class="insight-list"></div>
           <form id="command-form" class="command-form">
-            <h4>Send operator command</h4>
+            <h3>Queue an operator command</h3>
+            <p class="form-copy">Use a realistic label and target to push a fresh event into the timeline.</p>
             <label>
               Command label
-              <input name="label" placeholder="Stabilize Flow" value="Stabilize Flow" required />
+              <input
+                name="label"
+                placeholder="e.g. Stabilize Flow…"
+                value="Stabilize Flow"
+                minlength="2"
+                maxlength="40"
+                autocomplete="off"
+                required
+              />
             </label>
             <label>
               Target surface
-              <input name="target" placeholder="Signal Capture" value="Signal Capture" required />
+              <input
+                name="target"
+                placeholder="e.g. Signal Capture…"
+                value="Signal Capture"
+                minlength="2"
+                maxlength="40"
+                autocomplete="off"
+                required
+              />
             </label>
-            <button class="primary-btn" type="submit">Submit command</button>
+            <button class="primary-btn" type="submit">Submit Command</button>
             <p id="form-status" class="form-status" aria-live="polite"></p>
           </form>
         </section>

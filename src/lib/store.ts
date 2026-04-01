@@ -1,5 +1,8 @@
 export type AlertLevel = 'low' | 'medium' | 'high';
 export type PanelStatus = 'healthy' | 'watching' | 'critical';
+export type PanelFilter = PanelStatus | 'all';
+export type ActivityFilter = AlertLevel | 'all';
+export type RangeFilter = '6' | '12' | '24';
 
 export interface MetricCard {
   id: string;
@@ -7,6 +10,7 @@ export interface MetricCard {
   value: string;
   delta: string;
   trend: 'up' | 'down' | 'flat';
+  note: string;
 }
 
 export interface MissionPanel {
@@ -36,6 +40,12 @@ export interface CommandPayload {
   target: string;
 }
 
+export interface DashboardPreferences {
+  panel: PanelFilter;
+  activity: ActivityFilter;
+  range: RangeFilter;
+}
+
 export interface DashboardState {
   headline: string;
   subheadline: string;
@@ -50,10 +60,38 @@ const initialState: DashboardState = {
   headline: 'PulseRoom Command Center',
   subheadline: 'A live operations cockpit for launches, campaigns, or AI-assisted workflow monitoring.',
   metrics: [
-    { id: 'reach', label: 'Live Reach', value: '128.4K', delta: '+12.8%', trend: 'up' },
-    { id: 'automation', label: 'Automation Score', value: '92%', delta: '+4 pts', trend: 'up' },
-    { id: 'latency', label: 'Response Latency', value: '184ms', delta: '-26ms', trend: 'up' },
-    { id: 'tickets', label: 'Priority Queue', value: '07', delta: '-3', trend: 'up' }
+    {
+      id: 'reach',
+      label: 'Live Reach',
+      value: '128.4K',
+      delta: '+12.8%',
+      trend: 'up',
+      note: 'Audience exposure is climbing faster than the trailing launch baseline.'
+    },
+    {
+      id: 'automation',
+      label: 'Automation Score',
+      value: '92%',
+      delta: '+4 pts',
+      trend: 'up',
+      note: 'Agent-assisted flows are landing cleanly with fewer manual escalations.'
+    },
+    {
+      id: 'latency',
+      label: 'Response Latency',
+      value: '184ms',
+      delta: '-26ms',
+      trend: 'up',
+      note: 'Lower response time keeps the control room feeling credible under live refresh.'
+    },
+    {
+      id: 'tickets',
+      label: 'Priority Queue',
+      value: '07',
+      delta: '-3',
+      trend: 'up',
+      note: 'Operator interventions are shrinking, which suggests the current flow is stabilizing.'
+    }
   ],
   panels: [
     {
@@ -113,10 +151,16 @@ const initialState: DashboardState = {
       body: 'It shows real-time backend delivery, TypeScript route design, and a visually rich JavaScript UI.'
     }
   ],
-  sparkline: [42, 48, 44, 53, 57, 62, 59, 66, 71, 68, 74, 81]
+  sparkline: [32, 34, 37, 35, 39, 43, 41, 46, 44, 48, 52, 50, 54, 58, 55, 60, 64, 61, 66, 70, 68, 74, 78, 81]
 };
 
 let dashboardState: DashboardState = structuredClone(initialState);
+const preferenceStore = new Map<string, DashboardPreferences>();
+const defaultPreferences: DashboardPreferences = {
+  panel: 'all',
+  activity: 'all',
+  range: '12'
+};
 
 const activityPool: Array<Omit<ActivityItem, 'id' | 'time'>> = [
   {
@@ -180,8 +224,36 @@ function statusForProgress(progress: number): PanelStatus {
   return 'critical';
 }
 
+function normalizePanelFilter(value: unknown): PanelFilter {
+  return value === 'healthy' || value === 'watching' || value === 'critical' ? value : 'all';
+}
+
+function normalizeActivityFilter(value: unknown): ActivityFilter {
+  return value === 'low' || value === 'medium' || value === 'high' ? value : 'all';
+}
+
+function normalizeRangeFilter(value: unknown): RangeFilter {
+  return value === '6' || value === '24' ? value : '12';
+}
+
 export function getDashboardState(): DashboardState {
   return structuredClone(dashboardState);
+}
+
+export function getDashboardPreferences(clientId: string): DashboardPreferences {
+  return structuredClone(preferenceStore.get(clientId) ?? defaultPreferences);
+}
+
+export function setDashboardPreferences(clientId: string, incoming: Partial<DashboardPreferences>): DashboardPreferences {
+  const current = getDashboardPreferences(clientId);
+  const next: DashboardPreferences = {
+    panel: normalizePanelFilter(incoming.panel ?? current.panel),
+    activity: normalizeActivityFilter(incoming.activity ?? current.activity),
+    range: normalizeRangeFilter(incoming.range ?? current.range)
+  };
+
+  preferenceStore.set(clientId, next);
+  return structuredClone(next);
 }
 
 export function tickDashboard(): DashboardState {
