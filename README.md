@@ -29,6 +29,26 @@ PulseRoom Command Center renders a live dashboard with:
 - keyboard shortcuts for fast interaction
 - server-backed view preferences so the selected dashboard state survives refreshes during local use
 
+## Screenshots
+
+### Desktop overview
+
+![PulseRoom desktop overview](docs/screenshots/pulseroom-desktop.png)
+
+A wide desktop view of the command center showing the editorial hero, metric layer, and the main operational surfaces.
+
+### Filtered operator state
+
+![PulseRoom filtered dashboard state](docs/screenshots/pulseroom-filtered.png)
+
+A focused dashboard state that highlights the filter controls for panel health, activity severity, and the expanded chart range.
+
+### Mobile responsive view
+
+![PulseRoom mobile responsive layout](docs/screenshots/pulseroom-mobile.png)
+
+A narrow-screen capture that shows how the layout stacks cleanly while keeping the dashboard readable and usable on mobile.
+
 ## Why I built it this way
 
 I wanted this repo to feel like a small but complete product slice.
