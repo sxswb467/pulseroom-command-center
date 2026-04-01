@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>PulseRoom Command Center</title>
+    <meta name="description" content="A visually rich Fastify + TypeScript + JavaScript portfolio demo." />
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="aurora aurora-one"></div>
+    <div class="aurora aurora-two"></div>
+    <main class="shell">
+      <section class="hero glass">
+        <div>
+          <p class="eyebrow">FASTIFY + TYPESCRIPT + JAVASCRIPT</p>
+          <h1>PulseRoom Command Center</h1>
+          <p class="hero-copy">
+            A flashy realtime operations cockpit that feels more like a product launch control room than a CRUD app.
+            Built to showcase Fastify APIs, TypeScript backend structure, and a polished JavaScript frontend.
+          </p>
+          <div class="hero-actions">
+            <button class="primary-btn" id="run-command-btn">Run Stabilize Command</button>
+            <button class="secondary-btn" id="refresh-btn">Refresh Snapshot</button>
+          </div>
+        </div>
+        <div class="hero-panel">
+          <div class="mini-orb"></div>
+          <div>
+            <h2>Live stream active</h2>
+            <p>Server-Sent Events are powering animated dashboard updates every few seconds.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="metrics-grid" id="metrics-grid"></section>
+
+      <section class="content-grid">
+        <section class="glass panel-block">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Mission panels</p>
+              <h3>Operational surfaces</h3>
+            </div>
+            <div class="badge">Realtime</div>
+          </div>
+          <div id="panels-list" class="panel-list"></div>
+        </section>
+
+        <section class="glass panel-block chart-block">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Signal line</p>
+              <h3>Live momentum</h3>
+            </div>
+          </div>
+          <canvas id="sparkline" width="520" height="220" aria-label="Live momentum chart"></canvas>
+        </section>
+      </section>
+
+      <section class="content-grid lower-grid">
+        <section class="glass panel-block">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Activity feed</p>
+              <h3>Audit timeline</h3>
+            </div>
+          </div>
+          <div id="activity-list" class="activity-list"></div>
+        </section>
+
+        <section class="glass panel-block">
+          <div class="section-head">
+            <div>
+              <p class="section-label">Why this demo works</p>
+              <h3>Portfolio talking points</h3>
+            </div>
+          </div>
+          <div id="insights-list" class="insight-list"></div>
+          <form id="command-form" class="command-form">
+            <h4>Send operator command</h4>
+            <label>
+              Command label
+              <input name="label" placeholder="Stabilize Flow" value="Stabilize Flow" required />
+            </label>
+            <label>
+              Target surface
+              <input name="target" placeholder="Signal Capture" value="Signal Capture" required />
+            </label>
+            <button class="primary-btn" type="submit">Submit command</button>
+            <p id="form-status" class="form-status" aria-live="polite"></p>
+          </form>
+        </section>
+      </section>
+    </main>
+    <script src="/app.js" defer></script>
+  </body>
+</html>
