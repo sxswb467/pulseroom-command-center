@@ -1,8 +1,8 @@
 # PulseRoom Command Center
 
-PulseRoom Command Center is a realtime portfolio project I built as a software developer to show how I think about product feel, backend structure, and interactive UI polish in one focused demo.
+PulseRoom Command Center is a real-time operations dashboard built with Fastify, TypeScript, and JavaScript. It provides a polished command-center interface for monitoring live metrics, reviewing activity, filtering operational signals, and issuing operator actions from a single screen.
 
-Instead of building another generic CRUD screen, I wanted to create something that feels like a live operating surface: a command center with streaming updates, clear state transitions, operator actions, and a visual language that feels more like a product review artifact than a coding exercise.
+The app is designed to make live system state easier to understand and act on. It combines streaming updates, clear health indicators, responsive data views, keyboard-friendly controls, and persisted dashboard preferences so users can quickly scan changes, focus on critical events, and work efficiently on both desktop and mobile.
 
 ## Project overview
 
