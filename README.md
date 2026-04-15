@@ -18,6 +18,15 @@ This type of system is commonly used for:
 - Internal operations tools
 - Trading and analytics platforms
 
+## Why this matters
+
+This type of system is useful for:
+
+- SaaS platforms needing real-time operational visibility
+- Internal operations tools that require fast signal detection
+- Monitoring and analytics systems where live updates drive action
+- Teams that need a single interface for status, filtering, and response
+
 ## Key capabilities
 
 - Streaming dashboard refreshes over Server-Sent Events
@@ -29,6 +38,22 @@ This type of system is commonly used for:
 - Filter controls for panels, activity, and chart range
 - Keyboard shortcuts for fast operator workflows
 - Server-backed view preferences that survive refreshes during local use
+
+## Architecture overview
+
+The system is designed as a real-time operational dashboard:
+
+Frontend (browser dashboard)
+  ↓
+API layer (Fastify)
+  ↓
+Processing layer (live dashboard state, command handling, preference updates)
+  ↓
+Storage (in-memory store + server-backed preferences)
+
+Real-time updates via:
+
+- Server-Sent Events (SSE)
 
 ## Screenshots
 
