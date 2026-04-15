@@ -43,13 +43,12 @@ This type of system is useful for:
 
 The system is designed as a real-time operational dashboard:
 
-Frontend (browser dashboard)
-  ↓
-API layer (Fastify)
-  ↓
-Processing layer (live dashboard state, command handling, preference updates)
-  ↓
-Storage (in-memory store + server-backed preferences)
+```mermaid
+flowchart TD
+    A["Frontend (browser dashboard)"] --> B["API layer (Fastify)"]
+    B --> C["Processing layer (live dashboard state, command handling, preference updates)"]
+    C --> D["Storage (in-memory store + server-backed preferences)"]
+```
 
 Real-time updates via:
 
