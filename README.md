@@ -1,33 +1,34 @@
 # PulseRoom Command Center
 
-PulseRoom Command Center is a real-time operations dashboard built with Fastify, TypeScript, and JavaScript. It provides a polished command-center interface for monitoring live metrics, reviewing activity, filtering operational signals, and issuing operator actions from a single screen.
+PulseRoom Command Center is a production-style real-time operations dashboard built to present live system activity in a way that feels clear, fast, and actionable. It brings together streaming data, health monitoring, operational filtering, and operator commands in a single command-center interface.
 
-The app is designed to make live system state easier to understand and act on. It combines streaming updates, clear health indicators, responsive data views, keyboard-friendly controls, and persisted dashboard preferences so users can quickly scan changes, focus on critical events, and work efficiently on both desktop and mobile.
+## What this project demonstrates
 
-## Project overview
+- Real-time data handling with live streaming updates
+- System monitoring and operational UI design
+- Scalable backend and frontend architecture for dashboard products
+- Product polish through filtering, keyboard control, persistence, and responsive behavior
 
-I designed this project to demonstrate a few things at once:
+## Use case
 
-- I can build a clean Fastify backend with typed routes and validation.
-- I can model application state in TypeScript without overcomplicating the architecture.
-- I can deliver a frontend in plain JavaScript that still feels dynamic, intentional, and well-crafted.
-- I care about UI/UX details such as hierarchy, feedback, accessibility, keyboard flow, and visual identity.
+This type of system is commonly used for:
 
-The current UI uses a more editorial, serif-led direction inspired by a Rotman-style "Times New" presentation approach, while still behaving like a lightweight product dashboard.
+- SaaS monitoring dashboards
+- IoT and telemetry interfaces
+- Internal operations tools
+- Trading and analytics platforms
 
-## What the app does
+## Key capabilities
 
-PulseRoom Command Center renders a live dashboard with:
-
-- streaming dashboard refreshes over Server-Sent Events
-- metric cards with contextual annotations
-- mission panels with health states and progress bars
-- a live activity timeline with severity levels
-- a canvas-based sparkline for momentum tracking
-- an operator command form that injects new events into the stream
-- filter controls for panels, activity, and chart range
-- keyboard shortcuts for fast interaction
-- server-backed view preferences so the selected dashboard state survives refreshes during local use
+- Streaming dashboard refreshes over Server-Sent Events
+- Metric cards with contextual annotations
+- Mission panels with health states and progress bars
+- Live activity timeline with severity levels
+- Canvas-based sparkline for momentum tracking
+- Operator command form that injects new events into the stream
+- Filter controls for panels, activity, and chart range
+- Keyboard shortcuts for fast operator workflows
+- Server-backed view preferences that survive refreshes during local use
 
 ## Screenshots
 
@@ -49,41 +50,24 @@ A focused dashboard state that highlights the filter controls for panel health, 
 
 A narrow-screen capture that shows how the layout stacks cleanly while keeping the dashboard readable and usable on mobile.
 
-## Why I built it this way
-
-I wanted this repo to feel like a small but complete product slice.
-
-A lot of portfolio demos prove that the code runs, but they do not prove much about judgment. Here I tried to show judgment in a few different ways:
-
-- I kept the backend small and readable instead of hiding simple behavior behind unnecessary abstraction.
-- I used typed request validation so the API feels intentional.
-- I made the frontend interactive without depending on a heavy framework, which keeps the implementation honest.
-- I treated the UI as a product surface, not just a container for data.
-- I added quality-of-life behavior such as empty states, busy states, filter persistence, shortcut support, and reset controls.
-
 ## Tech stack
 
-- **Fastify** for the HTTP server and API routes
-- **TypeScript** for backend modeling, route contracts, and state management
-- **JavaScript** for the client-side rendering and interactions
-- **Server-Sent Events** for the live dashboard stream
-- **Canvas API** for sparkline rendering
-- **Static asset hosting through Fastify** for a compact full-stack setup
+- Fastify for the HTTP server and API routes
+- TypeScript for backend modeling, route contracts, and state management
+- JavaScript for client-side rendering and interactions
+- Server-Sent Events for the live dashboard stream
+- Canvas API for sparkline rendering
+- Static asset hosting through Fastify for a compact full-stack setup
 
-## UX details I focused on
+## Experience highlights
 
-A big part of this project is the experience layer, not just the data layer.
-
-Some of the UI/UX decisions I intentionally added:
-
-- stronger visual hierarchy in the hero and section layout
-- richer metric descriptions so the cards say something useful
-- filter chips with visible active state
-- live stream status and last-updated feedback
-- resettable dashboard view state
-- keyboard shortcuts for operator-style interaction
-- accessible progress bars and aria-live feedback for form responses
-- responsive layouts that remain usable on smaller screens
+- Strong visual hierarchy in the hero and section layout
+- Metric descriptions that communicate meaning instead of raw numbers only
+- Filter chips with visible active state
+- Live stream status and last-updated feedback
+- Resettable dashboard view state
+- Accessible progress bars and aria-live feedback for form responses
+- Responsive layouts that remain usable on smaller screens
 
 ## Keyboard shortcuts
 
@@ -98,8 +82,6 @@ The dashboard supports a small operator-style shortcut set:
 - `Esc` leave the focused input field
 
 ## API surface
-
-The project exposes a small set of routes:
 
 - `GET /api/health` returns a simple service health payload
 - `GET /api/dashboard` returns the current dashboard snapshot
@@ -126,23 +108,9 @@ npm run build
 npm start
 ```
 
-## Project structure
+## Architecture snapshot
 
-- `src/server.ts` — Fastify setup, static hosting, SSE endpoint, and fallback routing
-- `src/routes/api.ts` — API routes, request validation, and preference endpoints
-- `src/lib/store.ts` — typed dashboard state, mutation logic, and in-memory preference storage
-- `public/index.html` — page structure and dashboard sections
-- `public/app.js` — client-side rendering, filters, shortcuts, and persistence requests
-- `public/styles.css` — design system, layout, responsive behavior, and typography
-
-## What this project demonstrates
-
-For me, this project is less about raw complexity and more about showing full-stack product thinking in a compact repo.
-
-It demonstrates:
-
-- backend fundamentals with a clean API surface
-- live data delivery without unnecessary infrastructure
-- UI craft beyond default dashboard templates
-- practical interaction design and product polish
-- the ability to turn a simple technical stack into a presentation-ready experience
+- `src/server.ts` handles Fastify setup, static hosting, SSE streaming, and fallback routing
+- `src/routes/api.ts` contains API routes, request validation, and preference endpoints
+- `src/lib/store.ts` manages typed dashboard state and in-memory preference storage
+- `public/index.html`, `public/app.js`, and `public/styles.css` drive the client experience
